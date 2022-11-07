@@ -101,17 +101,20 @@ impl Stream for Emitter {
 
 #[macro_export]
 macro_rules! define_emitter {
-    ($($name:ident, $kind:expr, $emitter:expr), *) => {
+    ($name:ident, $kind:expr, $emitter:expr) => {
+        define_emitter!($name, $kind, $emitter, {});
+    };
+
+    ($name:ident, $kind:expr, $emitter:expr, $init:block) => {
         use $crate::emitter::{Alignment, Emitter};
-        $(
-            pub struct $name(pub Emitter);
-            impl $name {
-                pub fn new(millis: i64, icon: String, alignment: Alignment) -> Self {
-                    let mut emitter = Emitter::new(millis, icon, alignment);
-                    emitter.set_emitter($emitter);
-                    $name(emitter)
-                }
+        pub struct $name(pub Emitter);
+        impl $name {
+            pub fn new(millis: i64, icon: String, alignment: Alignment) -> Self {
+                let mut emitter = Emitter::new(millis, icon, alignment);
+                emitter.set_emitter($emitter);
+                $init;
+                $name(emitter)
             }
-        )*
+        }
     };
 }
