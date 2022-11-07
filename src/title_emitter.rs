@@ -3,41 +3,38 @@ use xdotool::window::{get_window_focus, get_window_name, get_window_pid};
 
 use std::fs;
 
-use crate::emitter::{Alignment, Emitted, Emitter};
+use crate::{define_emitter, emitter::Emitted};
 
-pub struct TitleEmitter(pub Emitter);
-const TITLE_MAX_LEN: usize = 23;
-const TITLE_SHORTENER: &str = "...";
+const TITLE_MAX_LEN: usize = 20 + TITLE_SHORTENER.len();
+const TITLE_SHORTENER: &str = "…";
+
+define_emitter!(
+    TitleEmitter,
+    "title",
+    |alignment: &Alignment, fg_color: &str, bg_color: &str, _icon: &str| {
+        let name = Self::get_name();
+        let mut display_name = name.clone();
+        if name.len() > TITLE_MAX_LEN {
+            display_name.truncate(TITLE_MAX_LEN - TITLE_SHORTENER.len());
+            display_name += TITLE_SHORTENER;
+        };
+
+        let pid = Self::get_pid();
+        let proc_path = format!("/proc/{}/task/{}/cmdline", pid, pid);
+        let cmdline = fs::read_to_string(proc_path).unwrap_or_else(|_| "ERROR".to_string());
+
+        Emitted {
+            content: display_name,
+            bg_color: String::from(bg_color),
+            fg_color: String::from(fg_color),
+            icon: Self::get_icon(name, cmdline),
+            kind: String::from("title"),
+            alignment: alignment.clone(),
+        }
+    }
+);
 
 impl TitleEmitter {
-    pub fn new(millis: i64, icon: String, alignment: Alignment) -> TitleEmitter {
-        let mut emitter = Emitter::new(millis, icon, alignment);
-        emitter.set_emitter(
-            |alignment: &Alignment, fg_color: &str, bg_color: &str, _icon: &str| {
-                let name = Self::get_name();
-                let mut display_name = name.clone();
-                if name.len() > TITLE_MAX_LEN {
-                    display_name.truncate(TITLE_MAX_LEN - TITLE_SHORTENER.len());
-                    display_name += TITLE_SHORTENER;
-                };
-
-                let pid = Self::get_pid();
-                let proc_path = format!("/proc/{}/task/{}/cmdline", pid, pid);
-                let cmdline = fs::read_to_string(proc_path).unwrap_or_else(|_| "ERROR".to_string());
-
-                Emitted {
-                    content: display_name,
-                    bg_color: String::from(bg_color),
-                    fg_color: String::from(fg_color),
-                    icon: Self::get_icon(name, cmdline),
-                    kind: String::from("title"),
-                    alignment: alignment.clone(),
-                }
-            },
-        );
-        TitleEmitter(emitter)
-    }
-
     fn get_focused_window() -> String {
         String::from_utf8(get_window_focus("").stdout).unwrap_or_else(|_| String::from("ERROR"))
     }
