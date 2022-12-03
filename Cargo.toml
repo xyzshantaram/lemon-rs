@@ -13,3 +13,6 @@ chrono = "0.4"
 sysinfo = "0.26"
 xdotool = "0.0.2"
 mpris = "1.1.2"
+libpulse-binding = { version = "2.26.0", default_features = false }
+dirs = "4"
+systemstat = "0.2.2"

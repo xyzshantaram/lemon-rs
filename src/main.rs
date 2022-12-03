@@ -3,15 +3,18 @@ pub mod emitter;
 pub mod media_emitter;
 pub mod title_emitter;
 pub mod util;
+pub mod volume_emitter;
 
-use crate::{emitter::Emitted, media_emitter::MediaEmitter};
+use crate::emitter::Emitted;
 use std::collections::HashMap;
 
 use emitter::Alignment;
 use futures::{stream::select_all, StreamExt};
 
 use clock_emitter::ClockEmitter;
+use media_emitter::MediaEmitter;
 use title_emitter::TitleEmitter;
+use volume_emitter::VolumeEmitter;
 
 use crate::emitter::Emitter;
 
@@ -49,9 +52,13 @@ async fn main() {
             "media",
             MediaEmitter::new(1000, String::from("\u{f8cf}"), Alignment::Continue).0,
         ),
+        (
+            "volume",
+            VolumeEmitter::new(100, String::from("\u{f485}"), Alignment::Right).0,
+        ),
     ]);
 
-    let order = vec!["title", "clock", "media"];
+    let order = vec!["title", "clock", "media", "volume"];
     let mut oups: Vec<String> = Vec::new();
     for _ in 0..order.len() {
         oups.push(String::new());
@@ -79,6 +86,6 @@ async fn main() {
         let idx = order.iter().position(|&i| i == emitted.kind).unwrap();
         oups[idx] = out(&emitted);
 
-        println!("{}", oups.join(" "));
+        println!("{} ", oups.join(" "));
     }
 }
