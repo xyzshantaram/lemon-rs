@@ -8,7 +8,7 @@ const MEDIA_SHORTENER: &str = "…";
 define_emitter!(
     MediaEmitter,
     "media",
-    |alignment: &Alignment, fg_color: &str, bg_color: &str, icon: &str| {
+    |alignment, fg_color, bg_color, icon| {
         let mut oup = "DBus connection error".to_owned();
         let mut icon = String::from(icon);
         let mut fg_color = String::from(fg_color);

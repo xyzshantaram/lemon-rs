@@ -4,7 +4,7 @@ use chrono::{Local, Timelike};
 define_emitter!(
     ClockEmitter,
     "clock",
-    |alignment: &Alignment, fg_color: &str, _: &str, icon: &str| {
+    |alignment, fg_color, _bgcolor, icon| {
         let now = Local::now();
         let hour = now.hour();
         let bg_color = if hour < 6 {

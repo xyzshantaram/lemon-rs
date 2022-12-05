@@ -11,7 +11,7 @@ const TITLE_SHORTENER: &str = "…";
 define_emitter!(
     TitleEmitter,
     "title",
-    |alignment: &Alignment, fg_color: &str, bg_color: &str, _icon: &str| {
+    |alignment, fg_color, bg_color, _icon| {
         let name = Self::get_name();
         let mut display_name = name.clone();
         if name.len() > TITLE_MAX_LEN {

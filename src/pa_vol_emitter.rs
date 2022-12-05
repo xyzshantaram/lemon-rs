@@ -62,7 +62,7 @@ impl PaVolumeEmitter {
         let mut emitter = Emitter::new(millis, icon, alignment);
         let mut state = VolumeState::new();
 
-        emitter.set_emitter(|alignment: &Alignment, fg_color: &str, _: &str, icon: &str| todo!());
+        emitter.set_emitter(|alignment, fg_color, _, icon| todo!());
         PaVolumeEmitter(emitter, state)
     }
 }

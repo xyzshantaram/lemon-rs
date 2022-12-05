@@ -5,7 +5,7 @@ use crate::{define_emitter, emitter::Emitted, util};
 define_emitter!(
     VolumeEmitter,
     "volume",
-    |alignment: &Alignment, fg_color: &str, bg_color: &str, _: &str| {
+    |alignment, fg_color, bg_color, _| {
         let home = dirs::home_dir().expect("Error: home dir couldn't be determined!");
         let script_path = home.join(".local").join("bin").join("volume");
         let mut cmd = Command::new("sh");
