@@ -10,5 +10,6 @@ Todo:
   - [] allow configuring alignment in config file
   - [] configure path for fallback temp discovery
 - [] handle rendering myself?
+- [] make colors controlled in the same place (lazy_static block prolly)
 
 Copyright © 2022 Siddharth Singh, under the terms of the MIT License.

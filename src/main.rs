@@ -4,6 +4,7 @@ pub mod emitter;
 pub mod media_emitter;
 pub mod mem_emitter;
 pub mod net_emitter;
+pub mod power_emitter;
 pub mod title_emitter;
 pub mod util;
 pub mod volume_emitter;
@@ -19,6 +20,7 @@ use cpu_emitter::CpuEmitter;
 use media_emitter::MediaEmitter;
 use mem_emitter::MemoryEmitter;
 use net_emitter::NetworkEmitter;
+use power_emitter::PowerEmitter;
 use systemstat::{Platform, System};
 use title_emitter::TitleEmitter;
 use volume_emitter::VolumeEmitter;
@@ -79,9 +81,15 @@ async fn main() {
             "net",
             NetworkEmitter::new(1000, String::from("\u{f0ac}"), Alignment::Continue).0,
         ),
+        (
+            "pwr",
+            PowerEmitter::new(100, String::from("BAT"), Alignment::Continue).0,
+        ),
     ]);
 
-    let order = vec!["title", "clock", "media", "mem", "cpu", "volume", "net"];
+    let order = vec![
+        "title", "clock", "media", "mem", "cpu", "volume", "net", "pwr",
+    ];
     let mut oups: Vec<String> = Vec::new();
     for _ in 0..order.len() {
         oups.push(String::new());
