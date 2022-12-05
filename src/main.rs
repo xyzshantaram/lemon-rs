@@ -1,4 +1,5 @@
 pub mod clock_emitter;
+mod cpu_emitter;
 pub mod emitter;
 pub mod media_emitter;
 pub mod net_emitter;
@@ -13,6 +14,7 @@ use futures::{stream::select_all, StreamExt};
 use lazy_static::lazy_static;
 
 use clock_emitter::ClockEmitter;
+use cpu_emitter::CpuEmitter;
 use media_emitter::MediaEmitter;
 use net_emitter::NetworkEmitter;
 use systemstat::{Platform, System};
@@ -60,8 +62,12 @@ async fn main() {
             MediaEmitter::new(1000, String::from("\u{f8cf}"), Alignment::Continue).0,
         ),
         (
+            "cpu",
+            CpuEmitter::new(1000, String::from("\u{f2c7}"), Alignment::Right).0,
+        ),
+        (
             "volume",
-            VolumeEmitter::new(100, String::from("\u{f485}"), Alignment::Right).0,
+            VolumeEmitter::new(100, String::from("\u{f485}"), Alignment::Continue).0,
         ),
         (
             "net",
@@ -69,7 +75,7 @@ async fn main() {
         ),
     ]);
 
-    let order = vec!["title", "clock", "media", "volume", "net"];
+    let order = vec!["title", "clock", "media", "cpu", "volume", "net"];
     let mut oups: Vec<String> = Vec::new();
     for _ in 0..order.len() {
         oups.push(String::new());
