@@ -1,6 +1,6 @@
 use std::process::Command;
 
-use crate::{define_emitter, emitter::Emitted, util};
+use crate::{color, define_emitter, emitter::Emitted, util};
 
 define_emitter!(
     VolumeEmitter,
@@ -14,7 +14,7 @@ define_emitter!(
 
         Emitted {
             fg_color: if stdout.contains('\u{f466}') {
-                String::from("#EE3333")
+                color!("EE3333")
             } else {
                 String::from(fg_color)
             },

@@ -15,3 +15,10 @@ pub fn get_stdout(mut cmd: Command) -> String {
 
     res
 }
+
+#[macro_export]
+macro_rules! color {
+    ($hex: expr) => {
+        format!("#{}", $hex)
+    };
+}

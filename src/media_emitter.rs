@@ -1,6 +1,6 @@
 use mpris::PlayerFinder;
 
-use crate::{define_emitter, emitter::Emitted};
+use crate::{color, define_emitter, emitter::Emitted};
 
 const MEDIA_MAX_LEN: usize = 20 + MEDIA_SHORTENER.len();
 const MEDIA_SHORTENER: &str = "…";
@@ -23,15 +23,15 @@ define_emitter!(
                 match status {
                     mpris::PlaybackStatus::Playing => {
                         icon = String::from("\u{f04b}");
-                        fg_color = String::from("#007cdf");
+                        fg_color = color!("007cdf");
                     }
                     mpris::PlaybackStatus::Paused => {
                         icon = String::from("\u{f04c}");
-                        fg_color = String::from("#b18bde");
+                        fg_color = color!("b18bde");
                     }
                     mpris::PlaybackStatus::Stopped => {
                         icon = String::from("\u{f04d}");
-                        fg_color = String::from("#555555");
+                        fg_color = color!("555555");
                     }
                 };
                 oup = active
