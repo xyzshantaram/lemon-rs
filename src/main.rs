@@ -1,22 +1,29 @@
 pub mod clock_emitter;
 pub mod emitter;
 pub mod media_emitter;
+pub mod net_emitter;
 pub mod title_emitter;
 pub mod util;
 pub mod volume_emitter;
 
-use crate::emitter::Emitted;
 use std::collections::HashMap;
 
-use emitter::Alignment;
+use emitter::{Alignment, Emitted};
 use futures::{stream::select_all, StreamExt};
+use lazy_static::lazy_static;
 
 use clock_emitter::ClockEmitter;
 use media_emitter::MediaEmitter;
+use net_emitter::NetworkEmitter;
+use systemstat::{Platform, System};
 use title_emitter::TitleEmitter;
 use volume_emitter::VolumeEmitter;
 
 use crate::emitter::Emitter;
+
+lazy_static! {
+    pub static ref SYS: System = System::new();
+}
 
 fn out(emitted: &Emitted) -> String {
     format!(
@@ -56,9 +63,13 @@ async fn main() {
             "volume",
             VolumeEmitter::new(100, String::from("\u{f485}"), Alignment::Right).0,
         ),
+        (
+            "net",
+            NetworkEmitter::new(1000, String::from("\u{f0ac}"), Alignment::Continue).0,
+        ),
     ]);
 
-    let order = vec!["title", "clock", "media", "volume"];
+    let order = vec!["title", "clock", "media", "volume", "net"];
     let mut oups: Vec<String> = Vec::new();
     for _ in 0..order.len() {
         oups.push(String::new());

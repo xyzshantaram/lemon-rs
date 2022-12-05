@@ -10,9 +10,10 @@ async-std = { version = "1.8.0", features = ["attributes"] }
 async-io = "1.10.0"
 futures = "0.3.25"
 chrono = "0.4"
-sysinfo = "0.26"
 xdotool = "0.0.2"
 mpris = "1.1.2"
 libpulse-binding = { version = "2.26.0", default_features = false }
 dirs = "4"
 systemstat = "0.2.2"
+lazy_static = "1"
+online = "4.0.0"
