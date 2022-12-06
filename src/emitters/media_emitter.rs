@@ -1,6 +1,6 @@
 use mpris::PlayerFinder;
 
-use crate::{color, define_emitter, emitter::Emitted};
+use crate::{color, define_emitter, emitter::Emitted, util::truncate};
 
 const MEDIA_MAX_LEN: usize = 20 + MEDIA_SHORTENER.len();
 const MEDIA_SHORTENER: &str = "…";
@@ -42,7 +42,7 @@ define_emitter!(
         }
 
         if oup.len() > MEDIA_MAX_LEN {
-            oup.truncate(MEDIA_MAX_LEN);
+            oup = truncate(oup, MEDIA_MAX_LEN - MEDIA_SHORTENER.len());
             oup += MEDIA_SHORTENER;
         }
         Emitted {

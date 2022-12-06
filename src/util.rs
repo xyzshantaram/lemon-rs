@@ -16,6 +16,10 @@ pub fn get_stdout(mut cmd: Command) -> String {
     res
 }
 
+pub fn truncate(s: String, max_width: usize) -> String {
+    s.chars().take(max_width).collect()
+}
+
 #[macro_export]
 macro_rules! color {
     ($hex: expr) => {
