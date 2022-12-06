@@ -9,6 +9,7 @@ Todo:
   - [] enable and disable blocks
   - [] allow configuring alignment in config file
   - [] configure path for fallback temp discovery
+  - [] change wifi icon, display speed
 - [] handle rendering myself?
 - [] make colors controlled in the same place (lazy_static block prolly)
 

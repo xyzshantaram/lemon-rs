@@ -1,29 +1,15 @@
-pub mod clock_emitter;
-pub mod cpu_emitter;
 pub mod emitter;
-pub mod media_emitter;
-pub mod mem_emitter;
-pub mod net_emitter;
-pub mod power_emitter;
-pub mod title_emitter;
+pub mod emitters;
 pub mod util;
-pub mod volume_emitter;
 
 use std::collections::HashMap;
 
 use emitter::{Alignment, Emitted};
+use emitters::*;
 use futures::{stream::select_all, StreamExt};
 use lazy_static::lazy_static;
 
-use clock_emitter::ClockEmitter;
-use cpu_emitter::CpuEmitter;
-use media_emitter::MediaEmitter;
-use mem_emitter::MemoryEmitter;
-use net_emitter::NetworkEmitter;
-use power_emitter::PowerEmitter;
 use systemstat::{Platform, System};
-use title_emitter::TitleEmitter;
-use volume_emitter::VolumeEmitter;
 
 use crate::emitter::Emitter;
 
