@@ -42,7 +42,7 @@ define_emitter!(
         }
 
         if oup.len() > MEDIA_MAX_LEN {
-            oup = truncate(oup, MEDIA_MAX_LEN - MEDIA_SHORTENER.len());
+            oup = truncate(oup, MEDIA_MAX_LEN);
             oup += MEDIA_SHORTENER;
         }
         Emitted {

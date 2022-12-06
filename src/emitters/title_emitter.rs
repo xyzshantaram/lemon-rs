@@ -5,7 +5,7 @@ use std::fs;
 
 use crate::{define_emitter, emitter::Emitted, util::truncate};
 
-const TITLE_MAX_LEN: usize = 20 + TITLE_SHORTENER.len();
+const TITLE_MAX_LEN: usize = 25 + TITLE_SHORTENER.len();
 const TITLE_SHORTENER: &str = "…";
 
 define_emitter!(
@@ -15,7 +15,7 @@ define_emitter!(
         let name = Self::get_name();
         let mut display_name = name.clone();
         if name.len() > TITLE_MAX_LEN {
-            display_name = truncate(display_name, TITLE_MAX_LEN - TITLE_SHORTENER.len());
+            display_name = truncate(display_name, TITLE_MAX_LEN);
             display_name += TITLE_SHORTENER;
         };
 
