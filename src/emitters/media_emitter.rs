@@ -53,5 +53,9 @@ define_emitter!(
             kind: String::from("media"),
             alignment: alignment.clone(),
         }
-    }
+    },
+    1000,
+    String::from("\u{f8cf}"),
+    Alignment::Continue,
+    {}
 );

@@ -25,47 +25,55 @@ fn is_if_valid(interface: &str) -> Option<String> {
     })?
 }
 
-define_emitter!(NetworkEmitter, "net", |alignment, _, bg_color, icon| {
-    let mut res = String::new();
-    let mut fg_color = color!("EE3333");
-    let mut icon = icon;
+define_emitter!(
+    NetworkEmitter,
+    "net",
+    |alignment, _, bg_color, icon| {
+        let mut res = String::new();
+        let mut fg_color = color!("EE3333");
+        let mut icon = icon;
 
-    if online::check(None).is_ok() {
-        fg_color = color!("809847");
-        if let Ok(networks) = SYS.networks() {
-            for (interface, _) in networks {
-                if let Some(connected) = is_if_valid(&interface) {
-                    match connected.as_str() {
-                        "wlan0" | "wlp3s0" => {
-                            icon = "\u{f1eb}";
-                            if let Ok(quality) = get_quality() {
-                                res += format!("{:.0}%", quality).as_str();
-                            } else {
-                                res += "ERROR";
+        if online::check(None).is_ok() {
+            fg_color = color!("809847");
+            if let Ok(networks) = SYS.networks() {
+                for (interface, _) in networks {
+                    if let Some(connected) = is_if_valid(&interface) {
+                        match connected.as_str() {
+                            "wlan0" | "wlp3s0" => {
+                                icon = "\u{f1eb}";
+                                if let Ok(quality) = get_quality() {
+                                    res += format!("{:.0}%", quality).as_str();
+                                } else {
+                                    res += "ERROR";
+                                }
+                                break;
                             }
-                            break;
+                            "eth0" | "enp2s0" => {
+                                icon = "\u{f6ff}";
+                                break;
+                            }
+                            _ => {}
                         }
-                        "eth0" | "enp2s0" => {
-                            icon = "\u{f6ff}";
-                            break;
-                        }
-                        _ => {}
                     }
                 }
+            } else {
+                res += "ERROR";
             }
         } else {
-            res += "ERROR";
+            res += "\u{f00d}";
         }
-    } else {
-        res += "\u{f00d}";
-    }
 
-    Emitted {
-        bg_color: String::from(bg_color),
-        icon: String::from(icon),
-        fg_color,
-        content: res,
-        kind: String::from("net"),
-        alignment: alignment.clone(),
-    }
-});
+        Emitted {
+            bg_color: String::from(bg_color),
+            icon: String::from(icon),
+            fg_color,
+            content: res,
+            kind: String::from("net"),
+            alignment: alignment.clone(),
+        }
+    },
+    1000,
+    String::from("\u{f0ac}"),
+    Alignment::Continue,
+    {}
+);

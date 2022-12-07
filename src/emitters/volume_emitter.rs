@@ -24,5 +24,9 @@ define_emitter!(
             content: stdout,
             kind: String::from("volume"),
         }
-    }
+    },
+    100,
+    String::from("\u{f485}"),
+    Alignment::Continue,
+    {}
 );

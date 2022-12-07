@@ -1,3 +1,4 @@
+pub mod config;
 pub mod emitter;
 pub mod emitters;
 pub mod util;
@@ -36,41 +37,18 @@ fn out(emitted: &Emitted) -> String {
         emitted.content
     )
 }
+
 #[async_std::main]
 async fn main() {
     let emitters: HashMap<&str, Emitter> = HashMap::from([
-        (
-            "title",
-            TitleEmitter::new(50, String::from("\u{f2d0}"), Alignment::Left).0,
-        ),
-        (
-            "clock",
-            ClockEmitter::new(100, String::from("\u{f017}"), Alignment::Center).0,
-        ),
-        (
-            "media",
-            MediaEmitter::new(1000, String::from("\u{f8cf}"), Alignment::Continue).0,
-        ),
-        (
-            "mem",
-            MemoryEmitter::new(1000, String::from("\u{f85a}"), Alignment::Right).0,
-        ),
-        (
-            "cpu",
-            CpuEmitter::new(1000, String::from("\u{f2c7}"), Alignment::Continue).0,
-        ),
-        (
-            "volume",
-            VolumeEmitter::new(100, String::from("\u{f485}"), Alignment::Continue).0,
-        ),
-        (
-            "net",
-            NetworkEmitter::new(1000, String::from("\u{f0ac}"), Alignment::Continue).0,
-        ),
-        (
-            "pwr",
-            PowerEmitter::new(100, String::from("BAT"), Alignment::Continue).0,
-        ),
+        ("title", TitleEmitter::default().0),
+        ("clock", ClockEmitter::default().0),
+        ("media", MediaEmitter::default().0),
+        ("mem", MemoryEmitter::default().0),
+        ("cpu", CpuEmitter::default().0),
+        ("volume", VolumeEmitter::default().0),
+        ("net", NetworkEmitter::default().0),
+        ("pwr", PowerEmitter::default().0),
     ]);
 
     let order = vec![

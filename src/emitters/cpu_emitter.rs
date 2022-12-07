@@ -17,31 +17,39 @@ fn get_temp() -> Result<f32, String> {
     }
 }
 
-define_emitter!(CpuEmitter, "cpu", |alignment, _, bg_color, icon| {
-    let mut fg_color = color!("809847");
-    let mut content = String::new();
+define_emitter!(
+    CpuEmitter,
+    "cpu",
+    |alignment, _, bg_color, icon| {
+        let mut fg_color = color!("809847");
+        let mut content = String::new();
 
-    match get_temp() {
-        Ok(temp) => {
-            content += &format!("{:.1}°C", temp);
-            if temp >= 60.0 {
-                fg_color = color!("cc4500")
-            };
-            if temp >= 70.0 {
-                fg_color = color!("e63e00")
-            };
+        match get_temp() {
+            Ok(temp) => {
+                content += &format!("{:.1}°C", temp);
+                if temp >= 60.0 {
+                    fg_color = color!("cc4500")
+                };
+                if temp >= 70.0 {
+                    fg_color = color!("e63e00")
+                };
+            }
+            Err(e) => {
+                eprintln!("{}", e)
+            }
         }
-        Err(e) => {
-            eprintln!("{}", e)
-        }
-    }
 
-    Emitted {
-        bg_color: String::from(bg_color),
-        fg_color,
-        content,
-        icon: String::from(icon),
-        kind: String::from("cpu"),
-        alignment: alignment.clone(),
-    }
-});
+        Emitted {
+            bg_color: String::from(bg_color),
+            fg_color,
+            content,
+            icon: String::from(icon),
+            kind: String::from("cpu"),
+            alignment: alignment.clone(),
+        }
+    },
+    3000,
+    String::from("\u{f2c7}"),
+    Alignment::Continue,
+    {}
+);

@@ -31,7 +31,11 @@ define_emitter!(
             kind: String::from("title"),
             alignment: alignment.clone(),
         }
-    }
+    },
+    50,
+    String::from("\u{f2d0}"),
+    Alignment::Left,
+    {}
 );
 
 impl TitleEmitter {

@@ -24,5 +24,9 @@ define_emitter!(
             kind: String::from("clock"),
             alignment: alignment.clone(),
         }
-    }
+    },
+    500,
+    String::from("\u{f017}"),
+    Alignment::Center,
+    {}
 );
