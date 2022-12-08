@@ -5,6 +5,7 @@ pub mod util;
 
 use std::collections::HashMap;
 
+use config::Config;
 use emitter::{Alignment, Emitted};
 use emitters::*;
 use futures::{stream::select_all, StreamExt};
@@ -16,6 +17,7 @@ use crate::emitter::Emitter;
 
 lazy_static! {
     pub static ref SYS: System = System::new();
+    pub static ref CONFIG: Config = config::get();
 }
 
 fn out(emitted: &Emitted) -> String {
