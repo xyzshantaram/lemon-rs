@@ -1,4 +1,4 @@
-use crate::{color, define_emitter, Emitted, SYS};
+use crate::{color, define_emitter, Emitted, CONFIG, SYS};
 use systemstat::Platform;
 
 fn get_temp() -> Result<f32, String> {
@@ -7,7 +7,10 @@ fn get_temp() -> Result<f32, String> {
         Err(_) => {
             // fallback to reading /sys
             let tmp = std::fs::read_to_string(
-                "/sys/bus/platform/devices/thinkpad_hwmon/hwmon/hwmon3/temp1_input",
+                CONFIG
+                    .fallback_tmp_path
+                    .clone()
+                    .expect("Fallback temp path not set and systemstat failed to get temp!"),
             )
             .map_err(|e| format!("Error reading fallback file: {}", e))?;
             str::parse::<f32>(tmp.trim())
@@ -35,7 +38,7 @@ define_emitter!(
                 };
             }
             Err(e) => {
-                eprintln!("{}", e)
+                eprintln!("err: cpu: {}", e)
             }
         }
 
