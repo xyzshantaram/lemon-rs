@@ -57,7 +57,7 @@ define_emitter!(
                 }
             }
             Err(x) => {
-                eprintln!("bat: {}", x);
+                eprintln!("err: bat: {}", x);
             }
         };
 
