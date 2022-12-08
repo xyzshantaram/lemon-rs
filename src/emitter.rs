@@ -3,11 +3,12 @@ use std::{thread, time::Duration};
 use async_std::task::{self, Poll};
 use chrono::Local;
 use futures::Stream;
+use serde_derive::{Deserialize, Serialize};
 
 const DEFAULT_BG_COLOR: &str = "#000000";
 const DEFAULT_FG_COLOR: &str = "#FFFFFF";
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Alignment {
     Left,
     Right,

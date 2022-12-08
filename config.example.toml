@@ -1,0 +1,22 @@
+[emitters]
+order = ["title", "clock", "media", "mem", "cpu", "volume", "net", "power"]
+
+[emitters.title]
+alignment = "left"
+
+[emitters.clock]
+alignment = "center"
+
+[emitters.media]
+
+[emitters.mem]
+alignment = "right"
+
+[emitters.cpu]
+temp_path = "/sys/bus/platform/devices/thinkpad_hwmon/hwmon/hwmon3/temp1_input"
+
+[emitters.net]
+
+[emitters.power]
+
+[emitters.volume]
